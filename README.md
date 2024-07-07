@@ -16,5 +16,4 @@ Compile:
 ```
 apt install libcurl4-openssl-dev
 gcc -o ieee_oui_downloader ieee_oui_downloader.c -lcurl
-
 ```
