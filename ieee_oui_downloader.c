@@ -40,22 +40,21 @@ int download_file(const char *url, const char *output_filename) {
     // init the curl session
     curl_handle = curl_easy_init();
 
-    // specify URL to get
+    // load URL
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
 
-    // send all data to this function
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
-    // we pass our 'chunk' struct to the callback function
+    // 'chunk' struct to the callback function
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
 
-    // some servers don't like requests that are made without a user-agent field, so we provide one
+    // Add user-agent string
     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
-    // get it!
+    // Instantiate request
     res = curl_easy_perform(curl_handle);
 
-    // check for errors
+    // error handler
     if(res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         return 1;
@@ -70,7 +69,7 @@ int download_file(const char *url, const char *output_filename) {
         fclose(file);
     }
 
-    // cleanup curl stuff
+    // cleanup
     curl_easy_cleanup(curl_handle);
     free(chunk.memory);
     curl_global_cleanup();
