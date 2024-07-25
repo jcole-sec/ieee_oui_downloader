@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install libcurl
+        run: sudo apt-get install -y libcurl4-openssl-dev
       - name: Compile code
         run: gcc -fprofile-arcs -ftest-coverage -O0 -o ieee_oui_downloader ieee_oui_downloader.c -lcurl
       - name: Run tests
